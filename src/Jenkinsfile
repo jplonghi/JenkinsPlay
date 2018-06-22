@@ -1,28 +1,23 @@
 pipeline {
 	agent any
+	environment {
+        dockerImageName = "docker.slc.crengland.com/cre/myservice"
+    }
 	stages{
-		
-		
 		stage('Clone repository') {
 			steps{
                 checkout scm
 			}
 		}
-
-		
-		
         stage('DEV'){
 			when{
 				branch 'feature/*'
 			}
-			
-					steps{
-						bat "echo Build For DEV ${env.BRANCH_NAME}"
-						bat "echo Build in DEV"
-					}
+			steps{
+				bat "echo Build For DEV ${dockerImageName}"
+				bat "echo Build in DEV"
+			}
 		}
-
-
 		stage('QA'){
 			when{
 				branch 'QA-SNAPSHOT'
@@ -33,20 +28,18 @@ pipeline {
 						bat "echo Build in QA"
 					}
 		}
-
-
 		stage('PROD'){
 			when{
 				branch 'master'
 			}
+			environment { 
+                image = "${dockerImageName}:1.0-prod" 
+            }
 			steps{
-				bat "echo Build For Prod ${env.BRANCH_NAME}"
+				bat "echo Build For Prod ${image}"
 				bat "echo Build in PROD"
 			}
-
-		}
-
-				
+		}	
     }
 
 }
