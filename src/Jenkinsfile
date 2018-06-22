@@ -1,51 +1,33 @@
 pipeline {
-	agent none
-	stages{
-		
-		
-		stage('Clone repository') {
-			steps{
-                checkout scm
-			}
-		}
-
-		stage('Master'){
-			when{
-				branch 'master'
-			}
-			stages{
-				stage('Build Prod'){
-					steps{
-						bat "echo Build For Prod ${env.BRANCH_NAME}"
-					}
-				}
-				stage('Deploy Prod'){
-					steps{
-						bat "echo Build in PROD"
-					}
-				}
-			}
-			
-		  
-		}
-		
-        stage('Feature'){
-			when{
-				branch 'feature/*'
-			}
-			stages{
-				stage('Build DEV'){
-					steps{
-						bat "echo Build For DEV ${env.BRANCH_NAME}"
-					}
-				}
-				stage('Deploy DEV'){
-					steps{
-						bat "echo Build in DEV"
-					}
-				}
-			}
-		}
+    agent none
+    stages {
+        stage('Non-Sequential Stage') {
+            agent {
+                label 'for-non-sequential'
+            }
+            steps {
+                echo "On Non-Sequential Stage"
+            }
+        }
+        stage('Sequential') {
+            agent {
+                label 'for-sequential'
+            }
+            environment {
+                FOR_SEQUENTIAL = "some-value"
+            }
+            stages {
+               stage('In Sequential 1') {
+                   steps {
+                       echo "In Sequential 1"
+                   }
+               }
+               stage('In Sequential 2') {
+                   steps {
+                       echo "In Sequential 2"
+                   }
+               }
+            }
+        }
     }
-
 }
