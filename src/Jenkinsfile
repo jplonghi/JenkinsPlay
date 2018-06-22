@@ -16,18 +16,37 @@ pipeline {
 			when{
 				branch 'master'
 			}
-			steps{
-				bat "echo Build Master Branch"
+			stages{
+				stage('Build Prod'){
+					steps{
+						bat "echo Build For Prod ${env.BRANCH_NAME}"
+					}
+				}
+				stage('Deploy Prod'){
+					steps{
+						bat "echo Build in PROD"
+					}
+				}
 			}
+			
 		  
 		}
 		
         stage('Feature'){
 			when{
-				branch 'feature'
+				branch 'feature/*'
 			}
-			steps{
-				bat "echo Build feature branch"
+			stages{
+				stage('Build DEV'){
+					steps{
+						bat "echo Build For DEV ${env.BRANCH_NAME}"
+					}
+				}
+				stage('Deploy DEV'){
+					steps{
+						bat "echo Build in DEV"
+					}
+				}
 			}
 		}
     }
