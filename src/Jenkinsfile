@@ -1,8 +1,5 @@
 pipeline {
-	agent any
-	environment {
-		imageName = "docker.slc.crengland.com/cre/myservice:dev-1.0.${env.BUILD_NUMBER}"
-    }
+	agent none
 	stages{
 		
 		
