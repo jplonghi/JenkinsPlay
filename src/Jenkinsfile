@@ -1,0 +1,29 @@
+pipeline {
+	agent any
+	environment {
+
+    }
+	stages{
+		
+		
+		stage('Clone repository') {
+			steps{
+                checkout scm
+			}
+		}
+
+		stage('Build Code'){
+			steps{
+				bat "echo ${env.BRANCH_NAME}"
+			}
+		  
+		}
+		
+        stage('Deploy DEV'){
+			steps{
+			    
+			}
+		}
+    }
+
+}
