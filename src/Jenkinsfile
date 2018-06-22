@@ -48,7 +48,7 @@ pipeline {
                 ok "Yes, we should."
                 submitter "joselonghi,bob"
                 parameters {
-                    string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+                    string(name: 'MESSAGE', defaultValue: 'This is PROD', description: 'Provide a message?')
                 }
             }
 			when{
@@ -62,7 +62,7 @@ pipeline {
                     currentBuild.displayName = "1.0.${env.BUILD_NUMBER}-prod"
                     currentBuild.description = "${dockerImageName}:1.0.${env.BUILD_NUMBER}-prod" 
                 }
-				bat "Hello, ${PERSON}, nice to meet you."
+				bat "echo  ${MESSAGE}"
 				bat "echo Build For Prod ${image}"
 				bat "echo Deploy in PROD"
 			}
