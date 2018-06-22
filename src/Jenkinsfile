@@ -13,6 +13,9 @@ pipeline {
 			when{
 				branch 'feature/*'
 			}
+			environment { 
+                image = "${dockerImageName}:1.0.${env.BUILD_NUMBER}-dev" 
+            }
 			steps{
 				bat "echo Build For DEV ${dockerImageName}"
 				bat "echo Build in DEV"
@@ -22,18 +25,20 @@ pipeline {
 			when{
 				branch 'QA-SNAPSHOT'
 			}
-			
-					steps{
-						bat "echo Build For QA ${env.BRANCH_NAME}"
-						bat "echo Build in QA"
-					}
+			environment { 
+                image = "${dockerImageName}:1.0.${env.BUILD_NUMBER}-qa" 
+            }
+			steps{
+				bat "echo Build For QA ${env.BRANCH_NAME}"
+				bat "echo Build in QA"
+			}
 		}
 		stage('PROD'){
 			when{
 				branch 'master'
 			}
 			environment { 
-                image = "${dockerImageName}:1.0-prod" 
+                image = "${dockerImageName}:1.0.${env.BUILD_NUMBER}-prod" 
             }
 			steps{
 				bat "echo Build For Prod ${image}"
