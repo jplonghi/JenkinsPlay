@@ -12,16 +12,22 @@ pipeline {
 			}
 		}
 
-		stage('Build Code'){
+		stage('Master'){
+			when{
+				branch 'master'
+			}
 			steps{
-				bat "echo ${env.BRANCH_NAME}"
+				bat "echo Build Master Branch"
 			}
 		  
 		}
 		
-        stage('Deploy DEV'){
+        stage('Feature'){
+			when{
+				branch 'feature'
+			}
 			steps{
-			    bat "echo ${imageName}"
+				bat "echo Build feature branch"
 			}
 		}
     }
