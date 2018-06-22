@@ -9,16 +9,7 @@ pipeline {
 			}
 		}
 
-		stage('PROD'){
-			when{
-				branch 'master'
-			}
-			steps{
-				bat "echo Build For Prod ${env.BRANCH_NAME}"
-				bat "echo Build in PROD"
-			}
-
-		}
+		
 		
         stage('DEV'){
 			when{
@@ -30,6 +21,31 @@ pipeline {
 						bat "echo Build in DEV"
 					}
 		}
+
+
+		stage('QA'){
+			when{
+				branch 'QA-SNAPSHOT'
+			}
+			
+					steps{
+						bat "echo Build For QA ${env.BRANCH_NAME}"
+						bat "echo Build in QA"
+					}
+		}
+
+
+		stage('PROD'){
+			when{
+				branch 'master'
+			}
+			steps{
+				bat "echo Build For Prod ${env.BRANCH_NAME}"
+				bat "echo Build in PROD"
+			}
+
+		}
+
 				
     }
 
