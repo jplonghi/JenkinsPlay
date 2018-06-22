@@ -46,7 +46,7 @@ pipeline {
 			input {
                 message "This is PROD should we continue?"
                 ok "Yes, we should."
-                submitter "Jose Longhi,bob"
+                submitter "joselonghi,bob"
                 parameters {
                     string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
                 }
