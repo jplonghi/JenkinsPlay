@@ -2,6 +2,7 @@ pipeline {
 	agent any
 	environment {
         dockerImageName = "docker.slc.crengland.com/cre/myservice"
+		
     }
 	stages{
 		stage('Clone repository') {
@@ -41,6 +42,10 @@ pipeline {
                 image = "${dockerImageName}:1.0.${env.BUILD_NUMBER}-prod" 
             }
 			steps{
+				script {
+                    currentBuild.displayName = "1.0.${env.BUILD_NUMBER}-prod"
+                    currentBuild.description = "${dockerImageName}:1.0.${env.BUILD_NUMBER}-prod" 
+                }
 				bat "echo Build For Prod ${image}"
 				bat "echo Build in PROD"
 			}
